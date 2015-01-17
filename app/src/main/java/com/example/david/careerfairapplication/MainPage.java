@@ -73,19 +73,19 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
         aa = new ArrayAdapter<company>(this, android.R.layout.simple_list_item_1, masterList);
         visibleList.setAdapter(aa);
         visibleList.setOnItemClickListener(new ListClickHandler());
-
-        Vector<String> emptyvec = new Vector<String>();
         populateList();
 
     }
-	private class populateList(){
-	    company newComp = new company("GE", "This is a shit company", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true);
+	private void populateList(){
+        Vector<String> emptyvec = new Vector<String>();
+
+        company newComp = new company("GE", "This is a shit company", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true);
 	    masterList.add(newComp);
-        company newComp = new company("EPIC", "This is an ok company", "merr", "www.EPIC.com", false, emptyvec, "ehhh", "intern", "west", false);
+        newComp = new company("EPIC", "This is an epic company", "merr", "www.EPIC.com", false, emptyvec, "ehhh", "intern", "west", false);
         masterList.add(newComp);
-        company newComp = new company("Dell", "This is an famous company", "bat shit", "www.DELL.com", true, emptyvec, "ehhh", "Full Time", "south", false);
+        newComp = new company("Dell", "This is an famous company", "bat shit", "www.DELL.com", true, emptyvec, "ehhh", "Full Time", "south", false);
         masterList.add(newComp);
-        company newComp = new company("Eli Lilly", "This is an good company", "dog shit", "www.ELILILLY.com", false, emptyvec, "ehhh", "Full Time", "north", true);
+        newComp = new company("Eli Lilly", "This is an good company", "dog shit", "www.ELILILLY.com", false, emptyvec, "ehhh", "Full Time", "north", true);
         masterList.add(newComp);
         aa.notifyDataSetChanged();
 	}
@@ -135,6 +135,16 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
             Collections.sort(curList,   new  Comparator<company>() {
                 public int compare(company a, company b) {
                     return a.name.compareTo(b.name);
+                }
+            });
+        }
+        else if (item == 1){
+            Collections.sort(curList, new Comparator<company>() {
+                @Override
+                public int compare(company a, company b) {
+                    Integer a_date = (a.date) ? 1 : 0;
+                    Integer b_date = (b.date) ? 1 : 0;
+                    return a_date.compareTo(b_date);
                 }
             });
         }
