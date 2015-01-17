@@ -1,6 +1,8 @@
 package com.example.david.careerfairapplication;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -47,27 +49,28 @@ class company {
 
 }
 
-public class MainPage extends ActionBarActivity {
+public class MainPage extends ActionBarActivity implements DialogInterface.OnClickListener {
     ListView masterList;
     ArrayList<company> companyArrayList;
     ArrayAdapter<company> aa;
-
+    String[] sortingTypes = {"Alphabetically", "By Day"};
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         context = this;
-        masterList = (ListView)findViewById(R.id.companyList);
+        masterList = (ListView) findViewById(R.id.companyList);
 
         companyArrayList = new ArrayList<company>();
 
-        aa = new ArrayAdapter<company>(this,android.R.layout.simple_list_item_1,companyArrayList);
+        aa = new ArrayAdapter<company>(this, android.R.layout.simple_list_item_1, companyArrayList);
         masterList.setAdapter(aa);
         masterList.setOnItemClickListener(new ListClickHandler());
 
         Vector<String> emptyvec = new Vector<String>();
-        company newComp = new company("GE","This is a shit company","bat poop", "www.GE.com",true,emptyvec,"good","intern","northeast",true);
+        company newComp = new company("GE", "This is a shit company", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true);
         companyArrayList.add(newComp);
         aa.notifyDataSetChanged();
 
@@ -90,18 +93,29 @@ public class MainPage extends ActionBarActivity {
         return true;
     }
 
+    private void displayPopup(String title, String[] items) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setItems(items, this);
+        builder.show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        this.displayPopup("Sort By", sortingTypes);
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClick(DialogInterface dialog, int item) {
+
     }
 }
