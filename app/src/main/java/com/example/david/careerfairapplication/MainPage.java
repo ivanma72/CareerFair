@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 class company {
@@ -48,6 +50,8 @@ class company {
     }
 
 }
+
+
 
 public class MainPage extends ActionBarActivity implements DialogInterface.OnClickListener {
     ListView masterList;
@@ -116,6 +120,13 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
     }
 
     public void onClick(DialogInterface dialog, int item) {
-
+        if (item == 0) {
+            Collections.sort(companyArrayList,new  Comparator<company>() {
+                public int compare(company a, company b) {
+                    return a.name.compareTo(b.name);
+                }
+            });
+        }
     }
+
 }
