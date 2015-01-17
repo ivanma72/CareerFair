@@ -124,7 +124,7 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
 
     public void onClick(DialogInterface dialog, int item) {
         if (item == 0) {
-            Collections.sort(curList,new  Comparator<company>() {
+            Collections.sort(curList,   new  Comparator<company>() {
                 public int compare(company a, company b) {
                     return a.name.compareTo(b.name);
                 }
