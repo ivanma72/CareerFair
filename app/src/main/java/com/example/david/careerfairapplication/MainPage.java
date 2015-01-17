@@ -54,8 +54,9 @@ class company {
 
 
 public class MainPage extends ActionBarActivity implements DialogInterface.OnClickListener {
-    ListView masterList;
-    ArrayList<company> companyArrayList;
+    ListView visibleList;
+    ArrayList<company> masterList;
+    ArrayList<company> curList;
     ArrayAdapter<company> aa;
     String[] sortingTypes = {"Alphabetically", "By Day"};
     Context context;
@@ -65,17 +66,17 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         context = this;
-        masterList = (ListView) findViewById(R.id.companyList);
+        visibleList = (ListView) findViewById(R.id.companyList);
 
-        companyArrayList = new ArrayList<company>();
+        masterList = new ArrayList<company>();
 
-        aa = new ArrayAdapter<company>(this, android.R.layout.simple_list_item_1, companyArrayList);
-        masterList.setAdapter(aa);
-        masterList.setOnItemClickListener(new ListClickHandler());
+        aa = new ArrayAdapter<company>(this, android.R.layout.simple_list_item_1, masterList);
+        visibleList.setAdapter(aa);
+        visibleList.setOnItemClickListener(new ListClickHandler());
 
         Vector<String> emptyvec = new Vector<String>();
         company newComp = new company("GE", "This is a shit company", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true);
-        companyArrayList.add(newComp);
+        masterList.add(newComp);
         aa.notifyDataSetChanged();
 
     }
@@ -83,7 +84,7 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
     private class ListClickHandler implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> Adapter, View view, int position, long arg3) {
-            Toast.makeText(getApplicationContext(), companyArrayList.get(position).name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), masterList.get(position).name, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -91,6 +92,8 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_page, menu);
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+
         MenuItem item;
         item = menu.add("Sort by");
         item = menu.add("Refine");
@@ -121,7 +124,7 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
 
     public void onClick(DialogInterface dialog, int item) {
         if (item == 0) {
-            Collections.sort(companyArrayList,new  Comparator<company>() {
+            Collections.sort(curList,new  Comparator<company>() {
                 public int compare(company a, company b) {
                     return a.name.compareTo(b.name);
                 }
@@ -129,4 +132,15 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
         }
     }
 
+    public void search (String input) {
+        curList.clear();
+        for(int i = 0; i < masterList.size(); i++) {
+            if (masterList.get(i).equals(input)) {
+                curList.add(masterList.get(i));
+            }
+        }
+        if (curList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "No results found :(", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
