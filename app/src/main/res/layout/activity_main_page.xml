@@ -12,6 +12,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
+        <EditText android:id="@+id/inputSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search Companies.."
+            android:inputType="textVisiblePassword"/>
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
