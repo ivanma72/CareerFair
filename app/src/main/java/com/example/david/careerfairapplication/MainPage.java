@@ -3,6 +3,7 @@ package com.example.david.careerfairapplication;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,12 +17,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-class company {
+class company implements Serializable{
     String name;
     String description;
     String industry;//enum?
@@ -108,7 +110,7 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
 	private void populateList(){
         Vector<String> emptyvec = new Vector<String>();
 
-        company newComp = new company("GE", "This is a shit company", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true, false);
+        company newComp = new company("GE", "GE is building the world by providing capital, expertise and infrastructure for a global economy. GE Capital has provided billions in financing so businesses can build and grow their operations and consumers can build their financial futures. We build appliances, lighting, power systems and other products that help millions of homes, offices, factories and retail facilities around the world work better.", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true, false);
 	    masterList.add(newComp);
         newComp = new company("EPIC", "This is an epic company", "merr", "www.EPIC.com", false, emptyvec, "ehhh", "intern", "west", false, false);
         masterList.add(newComp);
@@ -116,14 +118,13 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
         masterList.add(newComp);
         newComp = new company("Eli Lilly", "This is an good company", "dog shit", "www.ELILILLY.com", false, emptyvec, "ehhh", "Full Time", "north", true, false);
         masterList.add(newComp);
- //       Collections.copy(curList,masterList);
         curList.addAll(masterList);
         aa.notifyDataSetChanged();
 	}
     private class ListClickHandler implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> Adapter, View view, int position, long arg3) {
-            Toast.makeText(getApplicationContext(), masterList.get(position).name, Toast.LENGTH_SHORT).show();
+            launchCompany(position);
         }
     }
 
@@ -212,6 +213,21 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
             Toast.makeText(getApplicationContext(), "No results found :(", Toast.LENGTH_SHORT).show();
         }
     }
-
+    private void launchCompany(int companyPos) {
+        // TODO Auto-generated method stub
+        company passingComp = aa.getItem(companyPos);
+        Intent intent = new Intent(getBaseContext(),CompanyActivity.class);
+        intent.putExtra("companyObj",passingComp);
+        this.startActivityForResult(intent,0);
+    }
 
 }
+
+
+
+
+
+
+
+
+
