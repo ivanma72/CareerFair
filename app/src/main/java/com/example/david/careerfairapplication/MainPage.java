@@ -26,19 +26,20 @@ import java.util.Vector;
 class company implements Serializable{
     String name;
     String description;
+    ArrayList<String> majors;//enum?
+    boolean date;
     String industry;//enum?
     String website;
-    boolean date;
-    Vector<String> majors;//enum?
     String authorization;//enum?
     String positions;//enum?
     String Locations;//enum?
+    String building;
     boolean receptions;
     boolean fav;
 
     public company(String _name, String _description, String _industry, String _website,
-                   boolean _date, Vector<String> _majors, String _authorization, String _positions,
-                   String _locations, boolean _receptions, boolean _fav) {
+                   boolean _date, ArrayList<String> _majors, String _authorization, String _positions,
+                   String _locations, boolean _receptions,String _building, boolean _fav) {
         name = _name;
         description = _description;
         industry = _industry;
@@ -49,6 +50,7 @@ class company implements Serializable{
         positions = _positions;
         Locations = _locations;
         receptions = _receptions;
+        building = _building;
         fav = _fav;
     }
 
@@ -108,15 +110,17 @@ public class MainPage extends ActionBarActivity implements DialogInterface.OnCli
         });
     }
 	private void populateList(){
-        Vector<String> emptyvec = new Vector<String>();
+        ArrayList<String> emptyvec = new ArrayList<String>();
 
-        company newComp = new company("GE", "GE is building the world by providing capital, expertise and infrastructure for a global economy. GE Capital has provided billions in financing so businesses can build and grow their operations and consumers can build their financial futures. We build appliances, lighting, power systems and other products that help millions of homes, offices, factories and retail facilities around the world work better.", "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true, false);
+        company newComp = new company("GE",
+                "GE is building the world by providing capital, expertise and infrastructure for a global economy. GE Capital has provided billions in financing so businesses can " +"build and grow their operations and consumers can build their financial futures. We build appliances, lighting, power systems and other products that help " +"millions of homes, offices, factories and retail facilities around the world work better.",
+                "bat poop", "www.GE.com", true, emptyvec, "good", "intern", "northeast", true,"EECS", false);
 	    masterList.add(newComp);
-        newComp = new company("EPIC", "This is an epic company", "merr", "www.EPIC.com", false, emptyvec, "ehhh", "intern", "west", false, false);
+        newComp = new company("EPIC", "This is an epic company", "merr", "www.EPIC.com", false, emptyvec, "ehhh", "intern", "west", false,"EECS", false);
         masterList.add(newComp);
-        newComp = new company("Dell", "This is an famous company", "bat shit", "www.DELL.com", true, emptyvec, "ehhh", "Full Time", "south", false, false);
+        newComp = new company("Dell", "This is an famous company", "bat shit", "www.DELL.com", true, emptyvec, "ehhh", "Full Time", "south", false,"BBB", false);
         masterList.add(newComp);
-        newComp = new company("Eli Lilly", "This is an good company", "dog shit", "www.ELILILLY.com", false, emptyvec, "ehhh", "Full Time", "north", true, false);
+        newComp = new company("Eli Lilly", "This is an good company", "dog shit", "www.ELILILLY.com", false, emptyvec, "ehhh", "Full Time", "north", true,"Dow", false);
         masterList.add(newComp);
         curList.addAll(masterList);
         aa.notifyDataSetChanged();
